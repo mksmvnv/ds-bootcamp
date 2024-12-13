@@ -1,29 +1,29 @@
 #!/bin/sh
 
-# Название исполняемого скрипта, входного, выходного и временного файлов
-THIS_SCRIPT=$0
-INPUT_FILE=$1
+# Укажем название скрипта, входного, выходного и временного файлов
+THIS_SCRIPT="$0"
+INPUT_FILE="$1"
 OUTPUT_FILE="hh_positions.csv"
 TEMP_FILE="temp_positions.csv"
 
-# Ключевые слова для поиска
+# Укажем ключевые слова для поиска
 KEYWORDS="Junior|Middle|Senior"
 
-# Проверка числа аргументов
+# Проверяем число аргументов
 if [ "$#" -ne 1 ]; then
     echo "Укажите название CSV входного файла. Например: ${THIS_SCRIPT} ../ex02/hh_sorted.csv"
     exit 1
 fi
 
-# Проверка наличия входного файла
+# Проверяем наличие входного файла
 if [ ! -f "$INPUT_FILE" ]; then
     echo "Файл ${INPUT_FILE} не существует"
     exit 1
 fi
 
-# Обработка входного файла
+# Обрабатываем входной файл
 if ! {
-    # Считываем заголовок и записываем его во временный файл
+    # Считываем заголовки и записываем их во временный файл
     IFS= read -r HEADER
     echo "$HEADER" >"$TEMP_FILE"
 
@@ -31,7 +31,7 @@ if ! {
     while IFS= read -r LINE; do
         # Заменяем запятую на символ | в случае, если is_quotes = 1
         # Чтобы awk не рассматривал запятые внутри ковычек как разделитель
-        # Случай: "Data Scientist/Разработчик машинного обучения (ML, NLM, LLM)"
+        # Пример: "Data Scientist/Разработчик машинного обучения (ML, NLM, LLM)"
         CLEANED_LINE=$(
             echo "$LINE" | awk -v RS='' '
       BEGIN { FS=""; OFS="" }
@@ -63,10 +63,11 @@ if ! {
         echo "$FINAL_LINE" >>"$TEMP_FILE"
     done
 } <"$INPUT_FILE"; then
-    echo "Ошибка обработки данных"
+    echo "Ошибка замены данных"
     exit 1
 fi
 
+# Сохраняем заголовки из временного файла
 if ! head -n 1 "$TEMP_FILE" >"$OUTPUT_FILE"; then
 	echo "Ошибка сохранения заголовков"
 	exit 1
@@ -79,9 +80,10 @@ if ! tail -n +2 "$TEMP_FILE" | sort -t "," -k 2,2 -k 1,1n >>"$OUTPUT_FILE"; then
 fi
 
 # Удаляем временный файл
-if rm "$TEMP_FILE"; then
-    echo "Данные успешно заменены и сохранены в ${OUTPUT_FILE}"
-else
+if ! rm "$TEMP_FILE"; then
     echo "Ошибка удаления временного файла"
     exit 1
 fi
+
+# Выводим сообщение об успешном выполнении
+echo "Данные успешно заменены и сохранены в ${OUTPUT_FILE}"
