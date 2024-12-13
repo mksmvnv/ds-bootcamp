@@ -1,40 +1,35 @@
 #!/bin/sh
 
-# Название испольняемого скрипта, входных данных и выходного файла
-SCRIPT=$0
-INPUT_DATA=$1
+# Название испольняемого скрипта и выходного файла
+THIS_SCRIPT=$0
 OUTPUT_FILE="hh.json"
 
-# Проверка числа аргументов
-if [ "$#" -ne 1 ]; then
-  echo "Укажите название вакансии. Например: ${SCRIPT} \"Data Scientist\""
-  exit 1
-fi
-
-# Проверка наличия выходного файла
-if [ ! -f $OUTPUT_FILE ]; then
-  touch $OUTPUT_FILE
-fi
-
-# Название вакансии с заменой пробелов на код %20 для корректной выгрузки данных
-VACANCY_NAME=$(echo $INPUT_DATA | sed 's/ /%20/g')
-
-# Кол-во страниц
-PAGE_COUNT=20
-
-# URL API для получения вакансий
+# API URL адрес для получения списка вакансий
 API_URL="https://api.hh.ru/vacancies"
 
-# Запрос к API для получения первых 20 вакансий по запросу
-curl -s "${API_URL}?text=%22${VACANCY_NAME}%22&per_page=${PAGE_COUNT}" | \
-  jq '.' > $OUTPUT_FILE
+# Название вакансий с заменой пробелов на код %20 для корректной выгрузки данных
+POSITION_NAME=$(echo "$1" | sed 's/ /%20/g')
 
-# Проверка успешности выполнения запроса
-if [ $? -eq 0 ]; then
-  echo "Данные о вакансиях успешно сохранены в файл ${OUTPUT_FILE}"
-else
-  echo "Ошибка при запросе данных"
-  exit 1
+# Количество вакансий
+POSITION_COUNT=$2
+
+# Проверка числа аргументов (2 аргумента)
+if [ "$#" -ne 2 ]; then
+	echo "Укажите название вакансии и требуемое количество. Например: ${THIS_SCRIPT} \"Data Scientist\" 20"
+	exit 1
 fi
 
+# Проверка количества вакансий
+if [ "$POSITION_COUNT" -lt 1 ]; then
+	echo "Количество вакансий должно быть больше 0"
+	exit 1
+fi
 
+# Запрос к API для получения указанного количества вакансий в JSON формате через jq
+if curl -s "${API_URL}?text=%22${POSITION_NAME}%22&per_page=${POSITION_COUNT}" |
+	jq '.' >"$OUTPUT_FILE"; then
+	echo "Данные о вакансиях успешно сохранены в файл ${OUTPUT_FILE}"
+else
+	echo "Произошла ошибка при получении данных о вакансиях"
+	exit 1
+fi
