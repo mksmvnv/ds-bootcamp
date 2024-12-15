@@ -22,7 +22,6 @@ if ! echo '"id","created_at","name","has_test","alternate_url"' >"$OUTPUT_FILE";
 	echo "Ошибка добавления заголовков"
 	exit 1
 fi
-	
 
 # Обработка входного JSON файла с помощью jq фильтра
 if jq -rf filter.jq "${INPUT_FILE}" >>"$OUTPUT_FILE"; then

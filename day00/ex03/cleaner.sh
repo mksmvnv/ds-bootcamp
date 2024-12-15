@@ -11,29 +11,29 @@ KEYWORDS="Junior|Middle|Senior"
 
 # Проверяем число аргументов
 if [ "$#" -ne 1 ]; then
-    echo "Укажите название CSV входного файла. Например: ${THIS_SCRIPT} ../ex02/hh_sorted.csv"
-    exit 1
+	echo "Укажите название CSV входного файла. Например: ${THIS_SCRIPT} ../ex02/hh_sorted.csv"
+	exit 1
 fi
 
 # Проверяем наличие входного файла
 if [ ! -f "$INPUT_FILE" ]; then
-    echo "Файл ${INPUT_FILE} не существует"
-    exit 1
+	echo "Файл ${INPUT_FILE} не существует"
+	exit 1
 fi
 
 # Обрабатываем входной файл
 if ! {
-    # Считываем заголовки и записываем их во временный файл
-    IFS= read -r HEADER
-    echo "$HEADER" >"$TEMP_FILE"
+	# Считываем заголовки и записываем их во временный файл
+	IFS= read -r HEADER
+	echo "$HEADER" >"$TEMP_FILE"
 
-    # Обрабатываем каждую строку
-    while IFS= read -r LINE; do
-        # Заменяем запятую на символ | в случае, если is_quotes = 1
-        # Чтобы awk не рассматривал запятые внутри ковычек как разделитель
-        # Пример: "Data Scientist/Разработчик машинного обучения (ML, NLM, LLM)"
-        CLEANED_LINE=$(
-            echo "$LINE" | awk -v RS='' '
+	# Обрабатываем каждую строку
+	while IFS= read -r LINE; do
+		# Заменяем запятую на символ | в случае, если is_quotes = 1
+		# Чтобы awk не рассматривал запятые внутри ковычек как разделитель
+		# Пример: "Data Scientist/Разработчик машинного обучения (ML, NLM, LLM)"
+		CLEANED_LINE=$(
+			echo "$LINE" | awk -v RS='' '
       BEGIN { FS=""; OFS="" }
       {
         in_quotes = 0;
@@ -43,28 +43,28 @@ if ! {
         }
         print
       }'
-        )
+		)
 
-        # Извлекаем название вакансии
-        POSITION_NAME=$(echo "$CLEANED_LINE" | awk -F',' '{print $3}' | sed 's/|/,/g')
+		# Извлекаем название вакансии
+		POSITION_NAME=$(echo "$CLEANED_LINE" | awk -F',' '{print $3}' | sed 's/|/,/g')
 
-        # Ищем ключевые слова из KEYWORDS в названии вакансии
-        MATCH=$(echo "$POSITION_NAME" | grep -Eo "$KEYWORDS" | paste -sd'/')
+		# Ищем ключевые слова из KEYWORDS в названии вакансии
+		MATCH=$(echo "$POSITION_NAME" | grep -Eo "$KEYWORDS" | paste -sd'/')
 
-        # Если ключевые слова не найдены, устанавливаем значение "-"
-        if [ -z "$MATCH" ]; then
-            MATCH="-"
-        fi
+		# Если ключевые слова не найдены, устанавливаем значение "-"
+		if [ -z "$MATCH" ]; then
+			MATCH="-"
+		fi
 
-        # Заменяем название вакансии на найденные ключевые слова
-        FINAL_LINE=$(echo "$CLEANED_LINE" | awk -v newName="$MATCH" -F',' 'BEGIN {OFS=","} {$3=newName; print}' | sed 's/|/,/g')
+		# Заменяем название вакансии на найденные ключевые слова
+		FINAL_LINE=$(echo "$CLEANED_LINE" | awk -v newName="$MATCH" -F',' 'BEGIN {OFS=","} {$3=newName; print}' | sed 's/|/,/g')
 
-        # Записываем результат во временный файл
-        echo "$FINAL_LINE" >>"$TEMP_FILE"
-    done
+		# Записываем результат во временный файл
+		echo "$FINAL_LINE" >>"$TEMP_FILE"
+	done
 } <"$INPUT_FILE"; then
-    echo "Ошибка замены данных"
-    exit 1
+	echo "Ошибка замены данных"
+	exit 1
 fi
 
 # Сохраняем заголовки из временного файла
@@ -75,14 +75,14 @@ fi
 
 # Сортируем временный файл (исключая заголовок) и сохраняем результат
 if ! tail -n +2 "$TEMP_FILE" | sort -t "," -k 2,2 -k 1,1n >>"$OUTPUT_FILE"; then
-    echo "Ошибка сортировки данных"
-    exit 1
+	echo "Ошибка сортировки данных"
+	exit 1
 fi
 
 # Удаляем временный файл
 if ! rm "$TEMP_FILE"; then
-    echo "Ошибка удаления временного файла"
-    exit 1
+	echo "Ошибка удаления временного файла"
+	exit 1
 fi
 
 # Выводим сообщение об успешном выполнении
