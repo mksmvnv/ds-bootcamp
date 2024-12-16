@@ -1,5 +1,5 @@
 def read_csv(file: str) -> list:
-    """Считывает содержимое csv-файла и возвращает его в виде списка строк.
+    """Функция считывает содержимое csv-файла и возвращает его в виде списка строк.
 
     Args:
         file (str): Путь к csv-файлу.
@@ -7,12 +7,14 @@ def read_csv(file: str) -> list:
     Returns:
         list: Список строк содержащих данные csv-файла.
     """
+
     with open(file, encoding="utf-8") as f:
-        return f.readlines()
+        file_data = f.readlines()
+    return file_data
 
 
 def replace_comma_to_tab(file_data: list) -> list:
-    """Заменяет запятые на табуляции вне кавычек.
+    """Функция заменяет запятые на табуляции вне кавычек.
 
     Args:
         file_data (list): Список строк, содержащих данные csv-файла.
@@ -20,7 +22,8 @@ def replace_comma_to_tab(file_data: list) -> list:
     Returns:
         list: Список строк csv-файла с заменёнными запятыми на табуляции.
     """
-    formatted_data = []
+
+    formatted_file_data = []
     for line in file_data:
         new_line = []
         quotes = False
@@ -32,26 +35,34 @@ def replace_comma_to_tab(file_data: list) -> list:
                 new_line.append("\t")
             else:
                 new_line.append(char)
-        formatted_data.append("".join(new_line))
-    return formatted_data
+        formatted_file_data.append("".join(new_line))
+    return formatted_file_data
 
 
-def write_csv_to_tsv(formatted_data) -> None:
+def write_csv_to_tsv(formatted_file_data: list) -> None:
     """Сохраняет содержимое csv-файла в формате tsv.
 
     Args:
         file_data (list): Список строк содержащих данные csv-файла.
     """
+
     with open("ds.tsv", "w", encoding="utf-8") as f:
-        f.writelines(formatted_data)
+        f.writelines(formatted_file_data)
 
 
 def main() -> None:
-    """Основная функция программы."""
-    file_data = read_csv("ds.csv")
-    formatted_data = replace_comma_to_tab(file_data)
+    """Основная функция программы.
 
-    write_csv_to_tsv(formatted_data)
+    Returns:
+        None
+    """
+
+    file = "ds.csv"
+
+    file_data = read_csv(file)
+    formatted_file_data = replace_comma_to_tab(file_data)
+
+    write_csv_to_tsv(formatted_file_data)
 
 
 if __name__ == "__main__":
