@@ -31,7 +31,7 @@ def get_stock_price(company: str) -> float | str:
     ticker = COMPANIES.get(company)
 
     # Отрабатываем случай, когда компания не нашлась
-    if ticker is None:
+    if not ticker:
         return "Unknown company"
 
     return STOCKS[ticker]
@@ -42,7 +42,7 @@ def main() -> None:
 
     # Проверяем количество аргументов
     if len(sys.argv) != 2:
-        return None
+        sys.exit(1)
 
     # Считываем имя компании и приводим первую символ в верхний регистр
     company = sys.argv[1].capitalize()
