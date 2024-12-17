@@ -45,7 +45,7 @@ def replace_comma_to_tab(file_data: list) -> list:
 
 
 def write_csv_to_tsv(formatted_file_data: list) -> None:
-    """Сохраняет содержимое csv-файла в формате tsv.
+    """Функция сохраняет содержимое csv-файла в формате tsv.
 
     Args:
         file_data (list): Список строк содержащих данные csv-файла.

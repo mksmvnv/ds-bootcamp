@@ -29,16 +29,16 @@ def get_company_and_stock(ticker: str) -> str:
 
     # Получаем название компании и цену акции
     # Отрабатываем случай, когда компания не нашлась
-    company_stock = next(
+    company_and_stock = next(
         (
-            f"{key} {STOCKS[ticker]}"
+            f"{key} {STOCKS[value]}"
             for key, value in COMPANIES.items()
             if value == ticker
         ),
         "Unknown ticker",
     )
 
-    return company_stock
+    return company_and_stock
 
 
 def main() -> None:
