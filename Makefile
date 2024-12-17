@@ -1,18 +1,19 @@
 .PHONY: check-sh format-sh format-py
 .SILENT: check-sh format-sh format-py
 
-SRC=.
+SRC=src/
 FORMAT=*.sh
+POETRY=poetry run
 
 check-sh:
-	find $(SRC) -name "$(FORMAT)" -exec shellcheck {} + || true
-	find $(SRC) -name "$(FORMAT)" -exec shfmt -d {} + || true
+	find $(SRC) -name "$(FORMAT)" -exec $(POETRY) shellcheck {} + || true
+	find $(SRC) -name "$(FORMAT)" -exec $(POETRY) shfmt -d {} + || true
 
-format_sh:
-	find $(SRC) -name "$(FORMAT)" -exec shfmt -w {} +
+format-sh:
+	find $(SRC) -name "$(FORMAT)" -exec $(POETRY) shfmt -w {} +
 
 format-py:
-	poetry run black $(SRC)
+	$(POETRY) black $(SRC) --config pyproject.toml
 
 
 
