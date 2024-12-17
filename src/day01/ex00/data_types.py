@@ -29,17 +29,15 @@ def data_types() -> str:
             type(set_type),
         ]
     ]
+
     # Формируем строку в нужном формате
     formatted_types = f"[{', '.join(types)}]"
+
     return formatted_types
 
 
 def main() -> None:
-    """Основная функция программы.
-
-    Returns:
-        None
-    """
+    """Основная функция программы."""
 
     print(data_types())
 

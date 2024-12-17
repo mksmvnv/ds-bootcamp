@@ -10,6 +10,7 @@ def get_stock_price(company: str) -> float | str:
     Returns:
         float: Цена акции.
     """
+
     COMPANIES = {
         "Apple": "AAPL",
         "Microsoft": "MSFT",

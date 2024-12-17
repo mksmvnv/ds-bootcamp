@@ -10,6 +10,7 @@ def read_csv(file: str) -> list:
 
     with open(file, encoding="utf-8") as f:
         file_data = f.readlines()
+
     return file_data
 
 
@@ -24,9 +25,11 @@ def replace_comma_to_tab(file_data: list) -> list:
     """
 
     formatted_file_data = []
+
     for line in file_data:
         new_line = []
         quotes = False
+
         # Проходим по каждому символу строки и заменяем запятые на табуляции вне кавычек
         for char in line:
             if char == '"':
@@ -35,7 +38,9 @@ def replace_comma_to_tab(file_data: list) -> list:
                 new_line.append("\t")
             else:
                 new_line.append(char)
+
         formatted_file_data.append("".join(new_line))
+
     return formatted_file_data
 
 
@@ -51,11 +56,7 @@ def write_csv_to_tsv(formatted_file_data: list) -> None:
 
 
 def main() -> None:
-    """Основная функция программы.
-
-    Returns:
-        None
-    """
+    """Основная функция программы."""
 
     file = "ds.csv"
 
