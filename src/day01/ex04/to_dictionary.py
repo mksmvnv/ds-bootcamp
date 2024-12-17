@@ -1,11 +1,11 @@
-def convert_to_dict() -> dict:
-    """Функция преобразует список кортежей в словарь, где ключ - это число, а значение - список стран.
+def get_tuple_list() -> list:
+    """Функция возвращает список кортежей.
 
     Returns:
-        dict: Словарь, где ключ - это число, а значение - список стран.
+        list: Список кортежей.
     """
 
-    list_of_tuples = [
+    tuple_list = [
         ("Russia", "25"),
         ("France", "132"),
         ("Germany", "132"),
@@ -28,11 +28,24 @@ def convert_to_dict() -> dict:
         ("Israel", "12"),
     ]
 
+    return tuple_list
+
+
+def convert_to_dict(tuple_list: list) -> dict:
+    """Функция преобразует список кортежей в словарь, где ключ - это число, а значение - список стран.
+
+    Args:
+        tuple_list (list): Список кортежей.
+
+    Returns:
+        dict: Словарь, где ключ - это число, а значение - список стран.
+    """
+
     converted_dict = {}
 
     # Преобразуем список кортежей в словарь, где ключом будет число,
     # А значением список стран с этим числом
-    for country, num in list_of_tuples:
+    for country, num in tuple_list:
         if num not in converted_dict:
             converted_dict[num] = []
         converted_dict[num].append(country)
@@ -40,32 +53,34 @@ def convert_to_dict() -> dict:
     return converted_dict
 
 
-def format_dict(converted_dict: dict) -> list:
+def convert_to_list(converted_dict: dict) -> list:
     """Функция преобразует словарь в строки, где ключ - это число, а значение - страна.
 
     Args:
-        result_dict (dict): Словарь, где ключ - это число, а значение - список стран.
+        converted_dict (dict): Словарь, где ключ - это число, а значение - список стран.
 
     Returns:
         list: Список отформатированных строк.
     """
 
-    formatted_list = []
+    converted_list = []
 
     for num, countries in converted_dict.items():
         for country in countries:
-            formatted_list.append(f"'{num}' : '{country}'")
+            converted_list.append(f"'{num}' : '{country}'")
 
-    return formatted_list
+    return converted_list
 
 
 def main() -> None:
     """Основная функция программы."""
 
-    converted_dict = convert_to_dict()
-    formatted_list = format_dict(converted_dict)
+    tuple_list = get_tuple_list()
 
-    for item in formatted_list:
+    converted_dict = convert_to_dict(tuple_list)
+    converted_list = convert_to_list(converted_dict)
+
+    for item in converted_list:
         print(item)
 
 
