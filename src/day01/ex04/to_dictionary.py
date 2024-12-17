@@ -40,7 +40,7 @@ def convert_to_dict() -> dict:
     return converted_dict
 
 
-def format_dict(result_dict: dict) -> list:
+def format_dict(converted_dict: dict) -> list:
     """Функция преобразует словарь в строки, где ключ - это число, а значение - страна.
 
     Args:
@@ -52,7 +52,7 @@ def format_dict(result_dict: dict) -> list:
 
     formatted_list = []
 
-    for num, countries in result_dict.items():
+    for num, countries in converted_dict.items():
         for country in countries:
             formatted_list.append(f"'{num}' : '{country}'")
 
