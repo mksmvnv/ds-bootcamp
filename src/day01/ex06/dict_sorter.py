@@ -1,11 +1,11 @@
-def get_tuple_list() -> list:
+def get_countries() -> list:
     """Функция возвращает список кортежей.
 
     Returns:
         list: Список кортежей.
     """
 
-    tuple_list = [
+    countries = [
         ("Russia", "25"),
         ("France", "132"),
         ("Germany", "132"),
@@ -28,7 +28,7 @@ def get_tuple_list() -> list:
         ("Israel", "12"),
     ]
 
-    return tuple_list
+    return countries
 
 
 def convert_to_dict(tuple_list: list) -> dict:
@@ -75,8 +75,8 @@ def sort_dict(converted_dict: dict) -> dict:
 def main() -> None:
     """Основная функция программы."""
 
-    tuple_list = get_tuple_list()
-    converted_dict = convert_to_dict(tuple_list)
+    countries = get_countries()
+    converted_dict = convert_to_dict(countries)
     sorted_dict = sort_dict(converted_dict)
 
     for k, _ in sorted_dict.items():
