@@ -35,7 +35,7 @@ def get_audience() -> tuple:
     return audience
 
 
-def participants_not_in_clients(participants: list, clients: list):
+def participants_not_in_clients(participants: list, clients: list) -> list:
     """Функция возвращает список участников, которых нет в клиентах.
 
     Args:
@@ -53,7 +53,7 @@ def participants_not_in_clients(participants: list, clients: list):
     return not_clients
 
 
-def clients_not_in_recipients(clients: list, recipients: list):
+def clients_not_in_recipients(clients: list, recipients: list) -> list:
     """Функция возвращает список клиентов, которых нет в получателях.
 
     Args:
@@ -69,7 +69,7 @@ def clients_not_in_recipients(clients: list, recipients: list):
     return not_recipients
 
 
-def clients_not_in_participants(clients: list, participants: list):
+def clients_not_in_participants(clients: list, participants: list) -> list:
     """Функция возвращает список клиентов, которых нет в участниках.
 
     Args:

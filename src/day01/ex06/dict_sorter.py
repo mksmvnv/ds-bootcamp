@@ -1,8 +1,8 @@
 def get_countries() -> list:
-    """Функция возвращает список кортежей.
+    """Функция возвращает список стран с номерами в кортежах.
 
     Returns:
-        list: Список кортежей.
+        list: Список стран с номерами.
     """
 
     countries = [
@@ -31,11 +31,11 @@ def get_countries() -> list:
     return countries
 
 
-def convert_to_dict(tuple_list: list) -> dict:
+def convert_to_dict(countries: list) -> dict:
     """Функция преобразует список кортежей в словарь, где ключ - это число, а значение - список стран.
 
     Args:
-        tuple_list (list): Список кортежей.
+        countries (list): Список стран с номерами.
 
     Returns:
         dict: Словарь, где ключ - это число, а значение - список стран.
@@ -45,7 +45,7 @@ def convert_to_dict(tuple_list: list) -> dict:
 
     # Преобразуем список кортежей в словарь, где ключом будет число,
     # А значением список стран с этим числом
-    for country, num in tuple_list:
+    for country, num in countries:
         if country not in converted_dict:
             converted_dict[country] = []
         converted_dict[country].append(num)
