@@ -30,9 +30,9 @@ def get_audience() -> tuple:
     ]
     recipients = ["andrew@gmail.com", "jessica@gmail.com", "john@snow.is"]
 
-    audience_tuple = (clients, participants, recipients)
+    audience = (clients, participants, recipients)
 
-    return audience_tuple
+    return audience
 
 
 def participants_not_in_clients(participants: list, clients: list):
