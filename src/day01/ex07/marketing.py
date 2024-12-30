@@ -89,7 +89,7 @@ def main() -> None:
     """Основная функция программы."""
 
     if len(sys.argv) != 2:
-        sys.exit()
+        sys.exit(1)
 
     if sys.argv[1] == "call_center":
         print(clients_not_in_recipients(get_audience()[0], get_audience()[2]))
@@ -102,7 +102,7 @@ def main() -> None:
 
     else:
         print("Unknown command")
-        sys.exit()
+        sys.exit(1)
 
 
 if __name__ == "__main__":

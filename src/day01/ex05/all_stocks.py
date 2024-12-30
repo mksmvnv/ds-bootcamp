@@ -70,13 +70,13 @@ def main() -> None:
     """Основная функция программы."""
 
     if len(sys.argv) != 2:
-        sys.exit()
+        sys.exit(1)
 
     company_or_ticker_list = sys.argv[1].split(",")
 
     # Проверяем на пустые элементы
     if "" in [item.strip() for item in company_or_ticker_list]:
-        sys.exit()
+        sys.exit(1)
 
     companies, stocks = get_company_and_stock()
     all_stocks_data = find_company_or_ticker(companies, stocks, company_or_ticker_list)
