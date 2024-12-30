@@ -53,11 +53,17 @@ def find_company_or_ticker(
         if item in companies_lower:
             company = item.title()
             ticker = companies_lower[item]
-            all_stocks_data.append(f"{company} stock price is {stocks[ticker]}")
+            all_stocks_data.append(
+                f"{company} stock price is {stocks[ticker]}"
+            )
         elif item in stocks_lower:
             ticker = item.upper()
-            company = next((k for k, v in companies.items() if v.lower() == item), None)
-            all_stocks_data.append(f"{ticker} is a ticker symbol for {company}")
+            company = next(
+                (k for k, v in companies.items() if v.lower() == item), None
+            )
+            all_stocks_data.append(
+                f"{ticker} is a ticker symbol for {company}"
+            )
         else:
             all_stocks_data.append(
                 f"{item.title()} is an unknown company or an unknown ticker symbol"
@@ -79,7 +85,9 @@ def main() -> None:
         sys.exit(1)
 
     companies, stocks = get_company_and_stock()
-    all_stocks_data = find_company_or_ticker(companies, stocks, company_or_ticker_list)
+    all_stocks_data = find_company_or_ticker(
+        companies, stocks, company_or_ticker_list
+    )
 
     for item in all_stocks_data:
         print(item)

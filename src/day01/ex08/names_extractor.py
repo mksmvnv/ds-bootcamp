@@ -35,7 +35,9 @@ def get_credentials(emails: list) -> list:
     for email in emails:
         full_name = email.split("@")[0]
         name, surname = full_name.split(".")
-        employees.append(f"{name.capitalize()}\t{surname.capitalize()}\t{email}")
+        employees.append(
+            f"{name.capitalize()}\t{surname.capitalize()}\t{email}"
+        )
 
     return employees
 

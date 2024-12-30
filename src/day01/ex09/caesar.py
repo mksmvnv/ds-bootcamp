@@ -31,7 +31,11 @@ def encode(text: str, shift: int) -> str:
 
     # Применяем только к латинским буквам
     encode_text = "".join(
-        chr((ord(char) + shift - 97) % 26 + 97) if "a" <= char.lower() <= "z" else char
+        (
+            chr((ord(char) + shift - 97) % 26 + 97)
+            if "a" <= char.lower() <= "z"
+            else char
+        )
         for char in text
     )
 
@@ -51,7 +55,11 @@ def decode(text: str, shift: int) -> str:
 
     # Применяем только к латинским буквам
     decode_text = "".join(
-        chr((ord(char) - shift - 97) % 26 + 97) if "a" <= char.lower() <= "z" else char
+        (
+            chr((ord(char) - shift - 97) % 26 + 97)
+            if "a" <= char.lower() <= "z"
+            else char
+        )
         for char in text
     )
 

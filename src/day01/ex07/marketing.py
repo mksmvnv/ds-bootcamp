@@ -47,7 +47,9 @@ def participants_not_in_clients(participants: list, clients: list) -> list:
     """
 
     not_clients = [
-        participant for participant in participants if participant not in clients
+        participant
+        for participant in participants
+        if participant not in clients
     ]
 
     return not_clients
@@ -80,7 +82,9 @@ def clients_not_in_participants(clients: list, participants: list) -> list:
         list: Список клиентов, которых нет в участниках.
     """
 
-    not_participants = [client for client in clients if client not in participants]
+    not_participants = [
+        client for client in clients if client not in participants
+    ]
 
     return not_participants
 
@@ -95,10 +99,14 @@ def main() -> None:
         print(clients_not_in_recipients(get_audience()[0], get_audience()[2]))
 
     elif sys.argv[1] == "potential_clients":
-        print(participants_not_in_clients(get_audience()[1], get_audience()[0]))
+        print(
+            participants_not_in_clients(get_audience()[1], get_audience()[0])
+        )
 
     elif sys.argv[1] == "loly_program":
-        print(clients_not_in_participants(get_audience()[0], get_audience()[1]))
+        print(
+            clients_not_in_participants(get_audience()[0], get_audience()[1])
+        )
 
     else:
         print("Unknown command")
